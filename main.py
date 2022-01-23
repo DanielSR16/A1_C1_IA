@@ -1,7 +1,7 @@
 
 resolucion = 0.001
-x = [-6,-2]
-y = [4,2]
+x = [-5,-6]
+y = [2,4]
 
 RX = x[0] - x[1]
 RXnew = abs(RX)
