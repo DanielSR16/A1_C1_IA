@@ -8,7 +8,7 @@ genotipoY = []
 iY = []
 fenotipoY = []
 
-id = ["A","B","C","D","E","F","G"]
+id = ["A","B","C","D","E","F","G","H","I","J","K","L","M","O","P","Q","R","S","T","V","X","Y","Z"]
 
   
 
@@ -24,6 +24,10 @@ resolucion_deltaY = RYnew / 2**num_Bits(valoresY)
 
 print(resolucion_deltaX)
 print(resolucion_deltaY)
+
+
+
+
 
 # formula = valorX**2 * sin 
 def creacionTablaX():

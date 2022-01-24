@@ -13,7 +13,7 @@ class Individuo():
         self.fenotipo_X = 0
         self.fenotipo_Y = 0
         self.aptitud = 0
-
+    
     def genotipoX(self,bits_X):
         bitsString = ''
         for i in range(0,bits_X):
@@ -32,7 +32,7 @@ class Individuo():
 
     def fenotipoX(self,posicion,delta):
         self.fenotipo_X = posicion + self.i_X * delta
-     
+
     def fenotipoY(self,posicion,delta):
         self.fenotipo_Y = posicion + self.i_Y * delta
     
@@ -49,23 +49,20 @@ class Individuo():
             i = i+1
         # SALIDA
         return decimal
+
+    def crearIndividuo(self,bits_X,bits_Y,posicionX,deltaX,posicionY,deltaY):
+        self.genotipoX(bits_X)
+        self.genotipoY(bits_Y)
+        self.fenotipoX(posicion=posicionX,delta=deltaX)
+        self.fenotipoY(posicion=posicionY,delta=deltaY)
+        self.formula()
     
 
     def toString(self):
         return f'id: {self.id}\n' + f'Genotipo X: {self.genotipo_X}\n' + f'Genotipo Y: {self.genotipo_Y}\n' + f'i_X: {self.i_X}\n'+ f'i_Y: {self.i_Y}\n'+f'Fenotipo_X: {self.fenotipo_X}\n'+ f'Fenotipo_Y: {self.fenotipo_Y}\n' +f'aptiud: {self.aptitud}'
   
 
-    
 
-
-indiv1 = Individuo('a')
-indiv1.genotipoX(11)
-indiv1.genotipoY(11)
-indiv1.fenotipoX(2,0.0035)
-indiv1.fenotipoY(52,0.0045)
-
-
-print(indiv1.toString())
 
 
 #CREAR INDIVIDUOS
