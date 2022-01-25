@@ -57,6 +57,24 @@ class Individuo():
         self.fenotipoY(posicion=posicionY,delta=deltaY)
         self.formula()
     
+    def individuo_temporal(self,genotipo_X,genotipo_Y):
+        self.genotipo_X = genotipo_X
+        self.genotipo_Y = genotipo_Y
+
+    def completarIndividuo (self,delta_X,delta_Y,posicion_X,posicion_Y):
+        decimalGenotipo_X = ''
+        decimalGenotipo_Y = ''
+        for x in self.genotipo_X:
+            decimalGenotipo_X = decimalGenotipo_X + str(x)
+        for y in self.genotipo_Y:
+            decimalGenotipo_Y = decimalGenotipo_Y + str(y)
+        
+        self.i_X = binario_to_Decimal(int(decimalGenotipo_X))
+        self.i_Y = binario_to_Decimal(int(decimalGenotipo_Y))
+        self.fenotipo_X = posicion_X + self.i_X * delta_X
+        self.fenotipo_Y = posicion_Y + self.i_Y * delta_Y
+        self.aptitud = self.fenotipo_X**2 * math.sin(self.fenotipo_Y) - 2 * self.fenotipo_Y**2 * math.cos(self.fenotipo_X)
+        
 
     def toString(self):
         return f'id: {self.id}\n' + f'Genotipo X: {self.genotipo_X}\n' + f'Genotipo Y: {self.genotipo_Y}\n' + f'i_X: {self.i_X}\n'+ f'i_Y: {self.i_Y}\n'+f'Fenotipo_X: {self.fenotipo_X}\n'+ f'Fenotipo_Y: {self.fenotipo_Y}\n' +f'aptiud: {self.aptitud}'
