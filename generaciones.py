@@ -14,7 +14,7 @@ valoresY = round(RYnew / resolucion + 1)
 tam_pob_incial = 7
 prob_muta_individuo = 0.5
 prob_mut_gen = 0.08
-tam_pob_max = 50
+tam_pob_max = 20
 num_generaciones = 5
 
 id = ["A","B","C","D","E","F","G","H","I","J","K","L","M","O","P","Q","R","S","T","V","X","Y","Z"]
@@ -180,20 +180,22 @@ def cruza():
    
         
     
-def cruza2(lista_individuos,listaNombre):
+def cruza2(lista_individuos,lista_Nombre):
     listaCruzas = []
     listaAux = []
-    while len(listaNombre) > 1: 
-        indv1 = random.choice(listaNombre)
+    lista_aux_cruzados = {}
+    nombres_cruzados = []
+    while len(lista_Nombre) > 1: 
+        indv1 = random.choice(lista_Nombre)
         listaAux.append(indv1)
-        listaNombre.remove(indv1)
-        indv2 = random.choice(listaNombre)
+        lista_Nombre.remove(indv1)
+        indv2 = random.choice(lista_Nombre)
         listaAux.append(indv2)
-        listaNombre.remove(indv2)
+        lista_Nombre.remove(indv2)
         listaCruzas.append(listaAux)
         listaAux = []
-    if(len(listNombres) == 1):
-        listaCruzas.append([listaNombre[0],listaNombre[0]])
+    if(len(lista_Nombre) == 1):
+        listaCruzas.append([lista_Nombre[0],lista_Nombre[0]])
     
     for indiv_cruzar in listaCruzas:
         print('--------------------------------------')
@@ -271,22 +273,28 @@ def cruza2(lista_individuos,listaNombre):
         nombre_nuevo_individuo = indiv_cruzar[0] + indiv_cruzar[1]
         nuevo_individuo = Individuo(nombre_nuevo_individuo)
         nuevo_individuo.individuo_temporal(genotipo_x_1,genotipo_y_1)
-        listaPoblacion[nombre_nuevo_individuo] = nuevo_individuo
-        listNombres.append(nombre_nuevo_individuo)
+        lista_aux_cruzados[nombre_nuevo_individuo] = nuevo_individuo
+        nombres_cruzados.append(nombre_nuevo_individuo)
+
+        # listaPoblacion[nombre_nuevo_individuo] = nuevo_individuo
+        # listNombres.append(nombre_nuevo_individuo)
 
         nombre_nuevo_individuo2 = indiv_cruzar[1] + indiv_cruzar[0]
         nuevo_individuo2 = Individuo(nombre_nuevo_individuo2)
         nuevo_individuo2.individuo_temporal(genotipo_x_2,genotipo_y_2)
-        listaPoblacion[nombre_nuevo_individuo2] = nuevo_individuo2
+        lista_aux_cruzados[nombre_nuevo_individuo2] = nuevo_individuo2
+        nombres_cruzados.append(nombre_nuevo_individuo2)
 
-        listNombres.append(nombre_nuevo_individuo2)
+        # listaPoblacion[nombre_nuevo_individuo2] = nuevo_individuo2
+        # listNombres.append(nombre_nuevo_individuo2)
     print('POBLACION XD')
     for indiv in listaPoblacion.values():
         print(indiv.toString())
 
-    if(len(listaPoblacion) < tam_pob_max):
-        cruza2(listaPoblacion,listNombres)
+    # if(len(listaPoblacion) < tam_pob_max):
+    #     cruza2(listaPoblacion,listNombres)
 
+    mutacion(lista_aux_cruzados,nombres_cruzados)
 
 
 
@@ -348,10 +356,25 @@ def mutacion(listaCruzados_aux,listaNombresAux):
         print('############  NUEVO   ############')
         print(nueva.toString())
     if len(listaPoblacion) < tam_pob_max:
-        cruza()
-def ingresarPoblacion ():
-    #SE TERMINA MAÑANA XD
-    A = 1
+        cruza2(listaPoblacion,listNombres)
+    else: 
+        generaciones()
+
+def poda(listaPoblacion,listNombres):
+    for nombres in listNombres:
+
+
+        listaPoblacion[nombres].
+
+
+
+def generaciones():
+    # contador_generaciones = 1
+    
+    # while(contador_generaciones<Generaciones):
+
+    # #SE TERMINA MAÑANA XD
+    # A = 1
 
 
 
