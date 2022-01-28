@@ -3,6 +3,7 @@ from individuo import *
 import random
 import operator
 import statistics
+import matplotlib.pyplot as plt
 resolucion = 0.001
 x = [2,7]
 y = [6,8]
@@ -13,11 +14,12 @@ RY = y[0] - y[1]
 RYnew = abs(RY)
 valoresX = round(RXnew / resolucion + 1)
 valoresY = round(RYnew / resolucion + 1)
-tam_pob_incial = 7
-prob_muta_individuo = 0.5
-prob_mut_gen = 0.08
+tam_pob_incial = 6
+prob_muta_individuo = 0.1
+prob_mut_gen = 0.05
 tam_pob_max = 20
-num_generaciones = 5
+num_generaciones = 50
+
 
 id = ["A","B","C","D","E","F","G","H","I","J","K","L","M","O","P","Q","R","S","T","V","X","Y","Z"]
 
@@ -25,6 +27,15 @@ listaPoblacion = {}
 listNombres = []
 
 resuldos_finales =[]
+contador_generaciones = 0
+
+total_mejor = []
+total_peor = []
+total_promedio = []
+
+total_generaciones = []
+for i in range(1,num_generaciones+1):
+    total_generaciones.append(i)
 # Bits de valores
 def num_Bits(valor):
     aux=0
@@ -52,7 +63,7 @@ resolucion_deltaY = round(RYnew / 2**num_Bits(valoresY),5)
 # print(resolucion_deltaX)
 # print(resolucion_deltaY)
 
-def crear_poblacion(bits_X,bits_Y,posicionX,posicionY,deltaX,deltaY):
+def crear_poblacion(bits_X,bits_Y,posicionX,posicionY,deltaX,deltaY,contador_gen):
     contador = 0
     print('soy delta Y : ',deltaY)
 
@@ -64,14 +75,15 @@ def crear_poblacion(bits_X,bits_Y,posicionX,posicionY,deltaX,deltaY):
             listNombres.append(id[contador])
             contador = contador + 1
 
-    cruza2(listaPoblacion,listNombres)
+    cruza2(listaPoblacion,listNombres,contador_gen)
         
 
 
    
         
     
-def cruza2(lista_individuos,lista_Nombre):
+def cruza2(lista_individuos,lista_Nombre,contador_gen):
+
     listaCruzas = []
     listaAux = []
     lista_aux_cruzados = {}
@@ -89,8 +101,8 @@ def cruza2(lista_individuos,lista_Nombre):
         listaCruzas.append([lista_Nombre[0],lista_Nombre[0]])
     
     for indiv_cruzar in listaCruzas:
-        print('--------------------------------------')
-        print(indiv_cruzar)
+        # print('--------------------------------------')
+        # print(indiv_cruzar)
         genotipo_x_1 = []
         genotipo_x_2 = []
         genotipo_y_1 = []
@@ -106,10 +118,10 @@ def cruza2(lista_individuos,lista_Nombre):
         genotipo_x_2.extend(lista_individuos[indiv_cruzar[1]].genotipo_X)
         genotipo_y_2.extend(lista_individuos[indiv_cruzar[1]].genotipo_Y)
         
-        print('X1:',genotipo_x_1)
-        print('Y1:',genotipo_y_1)
-        print('X2:',genotipo_x_2)
-        print('Y2:',genotipo_y_2)
+        # print('X1:',genotipo_x_1)
+        # print('Y1:',genotipo_y_1)
+        # print('X2:',genotipo_x_2)
+        # print('Y2:',genotipo_y_2)
         #eleccion de punto de cruza
         cruza_X = random.randint(1,len(genotipo_x_1)-1)
         cruza_Y = random.randint(1,len(genotipo_y_1)-1)
@@ -119,14 +131,14 @@ def cruza2(lista_individuos,lista_Nombre):
         change_genotipo_2_x = genotipo_x_2[cruza_X:len(genotipo_x_2)]
         change_genotipo_2_y = genotipo_y_2[cruza_Y:len(genotipo_y_2)]
 
-        print('cruzas!!!!')
-        print(cruza_X)
-        print(cruza_Y)
-        print('cambios')
-        print('X1',change_genotipo_1_x)
-        print('Y1',change_genotipo_1_y)
-        print('X2',change_genotipo_2_x)
-        print('Y2',change_genotipo_2_y)
+        # print('cruzas!!!!')
+        # print(cruza_X)
+        # print(cruza_Y)
+        # print('cambios')
+        # print('X1',change_genotipo_1_x)
+        # print('Y1',change_genotipo_1_y)
+        # print('X2',change_genotipo_2_x)
+        # print('Y2',change_genotipo_2_y)
 
         #limpar genotipos hasta su puto de cruza
 
@@ -139,11 +151,11 @@ def cruza2(lista_individuos,lista_Nombre):
             genotipo_y_1.pop()
             genotipo_y_2.pop()
 
-        print('Limpios')
-        print('X1:',genotipo_x_1)
-        print('Y1:',genotipo_y_1)
-        print('X2:',genotipo_x_2)
-        print('Y2:',genotipo_y_2)
+        # print('Limpios')
+        # print('X1:',genotipo_x_1)
+        # print('Y1:',genotipo_y_1)
+        # print('X2:',genotipo_x_2)
+        # print('Y2:',genotipo_y_2)
 
         #CRUZA DE DATOS
         #X
@@ -155,11 +167,11 @@ def cruza2(lista_individuos,lista_Nombre):
         genotipo_y_2.extend(change_genotipo_1_y)
            
         
-        print('CRUZADOS')
-        print('X1:',genotipo_x_1)
-        print('Y1:',genotipo_y_1)
-        print('X2:',genotipo_x_2)
-        print('Y2:',genotipo_y_2)
+        # print('CRUZADOS')
+        # print('X1:',genotipo_x_1)
+        # print('Y1:',genotipo_y_1)
+        # print('X2:',genotipo_x_2)
+        # print('Y2:',genotipo_y_2)
         #añadir nuevos inviduos a la poblacion
         nombre_nuevo_individuo = indiv_cruzar[0] + indiv_cruzar[1]
         nuevo_individuo = Individuo(nombre_nuevo_individuo)
@@ -178,18 +190,18 @@ def cruza2(lista_individuos,lista_Nombre):
 
         # listaPoblacion[nombre_nuevo_individuo2] = nuevo_individuo2
         # listNombres.append(nombre_nuevo_individuo2)
-    print('POBLACION XD')
-    for indiv in listaPoblacion.values():
-        print(indiv.toString())
+    # print('POBLACION XD')
+    # for indiv in listaPoblacion.values():
+    #     print(indiv.toString())
 
     # if(len(listaPoblacion) < tam_pob_max):
     #     cruza2(listaPoblacion,listNombres)
 
-    mutacion(lista_aux_cruzados,nombres_cruzados)
+    mutacion(lista_aux_cruzados,nombres_cruzados,contador_gen)
 
 
 
-def mutacion(listaCruzados_aux,listaNombresAux):
+def mutacion(listaCruzados_aux,listaNombresAux,contador_gen):
     for i in listaNombresAux:
         contadorProGen_X = 0
         listaProGen_X  = []
@@ -199,22 +211,21 @@ def mutacion(listaCruzados_aux,listaNombresAux):
        
    
         if(prob_muta_individuo <= mutacion_individuo):
-            # print(f'puede mutar: {i}******************************************************')
+         
             for cruzados_X in range(0,len(listaCruzados_aux[i].genotipo_X)):
                 muta_gen_x = round(random.uniform(0,1),4)
                 if(muta_gen_x <=prob_mut_gen ):
-                    # print(f'muta en x = {muta_gen_x}')
+               
                     listaProGen_X.append(contadorProGen_X-1)
                 contadorProGen_X = contadorProGen_X + 1
             
             for cruzados_y in range(0,len(listaCruzados_aux[i].genotipo_Y)):
                 muta_gen_y = round(random.uniform(0,1),4)
                 if( muta_gen_y<= prob_mut_gen ):
-                    # print(f'muta en y = {muta_gen_y}')
+                
                     listaProGen_Y.append(contadorProGen_Y-1)
                 contadorProGen_Y = contadorProGen_Y + 1
-            # print(listaProGen_X)
-            # print(listaProGen_Y)
+      
            
             if(len(listaProGen_X)>0):
                 for list_x in listaProGen_X:    
@@ -238,11 +249,11 @@ def mutacion(listaCruzados_aux,listaNombresAux):
 
        
     for nuevosNombres in  listaNombresAux:
-        print(nuevosNombres)
+        # print(nuevosNombres)
         listaCruzados_aux[nuevosNombres].completarIndividuo(resolucion_deltaX,resolucion_deltaY,x[0],y[0])
         listaPoblacion[nuevosNombres] = listaCruzados_aux[nuevosNombres]
         if listaPoblacion[nuevosNombres].i_X > valoresX or listaPoblacion[nuevosNombres].i_Y > valoresY:
-            print('se borro: ',nuevosNombres)
+            # print('se borro: ',nuevosNombres)
             del listaPoblacion[nuevosNombres]
         else:
             listNombres.append(nuevosNombres)
@@ -251,14 +262,14 @@ def mutacion(listaCruzados_aux,listaNombresAux):
     # for nueva in listaPoblacion.values():
     #     print('############  NUEVO   ############')
     #     print(nueva.toString())
-    print('POBLACION EN CUENTA: ',len(listaPoblacion))
-    print('POBLACION MAXIMIMA: ',tam_pob_max)
+    # print('POBLACION EN CUENTA: ',len(listaPoblacion))
+    # print('POBLACION MAXIMIMA: ',tam_pob_max)
     if len(listaPoblacion) < tam_pob_max:
-        cruza2(listaPoblacion,listNombres)
-    else:
-        poda()
+        cruza2(listaPoblacion,listNombres,contador_gen)
+    elif len(listaPoblacion) >= tam_pob_max:
+        poda(contador_gen)
 
-def poda():
+def poda(contador_gen):
     print('entre a podar')
       
 
@@ -268,18 +279,20 @@ def poda():
         
 
     aptitudes_sort = sorted(aptitudes_generacion.items(),key=operator.itemgetter(1),reverse=True)
+    total_peor.append(aptitudes_sort[len(aptitudes_sort)-1][1])
 
     # for name in enumerate(aptitudes_sort):
     #     print(name[1])
     # print('TOTAL: ',len(aptitudes_sort))
     # print('BORRADO: ', tam_pob_max)
+ 
     if(len(aptitudes_sort) == tam_pob_max):
         print('son iguales xd')
-        generaciones(aptitudes_sort)
+        generaciones(aptitudes_sort,contador_gen)
     elif len(aptitudes_sort) > tam_pob_incial:
         for boorar_aptitud in range(0,len(aptitudes_sort)-tam_pob_max):
            aptitudes_sort.pop()
-        generaciones(aptitudes_sort)
+        generaciones(aptitudes_sort,contador_gen)
 
  
     # print('PODADO !!!!!!')
@@ -291,27 +304,74 @@ def poda():
 
 
 
-def generaciones(aptitudes_sort):
+def generaciones(aptitudes_sort,contador_gen):
+  
+    contador_gen = contador_gen + 1
+    print(contador_gen)
+    new_poblacion = {}
+    new_nombres_poblacion = []
+
     lista_aux_media = []
     for dato in aptitudes_sort:
         lista_aux_media.append(dato[1])
     media = statistics.mean(lista_aux_media)
+    resuldos_finales.append([aptitudes_sort[0][1],media])
 
+    print('datos metidos en new poblation')
+    for datos_new in aptitudes_sort:
+        new_poblacion[datos_new[0]] = listaPoblacion[datos_new[0]]
+    
+    listaPoblacion.clear()
+    for datos_new2 in aptitudes_sort:
+        listaPoblacion[datos_new2[0]] = new_poblacion[datos_new2[0]]
+        new_nombres_poblacion.append(datos_new2[0])
+
+    if contador_gen < num_generaciones:
+        completarGeneraciones(listaPoblacion,new_nombres_poblacion,contador_gen)
+    if contador_gen == num_generaciones:
+        
+        for resul in resuldos_finales:
+            print(resul)
+            total_mejor.append(resul[0])
+            total_promedio.append(resul[1])
+        
+        
+
+def completarGeneraciones(lista_new_plobation,lista_new_Nombres,contador_gen):
+    
+
+     cruza2(lista_new_plobation,lista_new_Nombres,contador_gen)
+
+# def metodo ():
+    
+      
+    
+def grafica():
+   
+     #Primera Tabla
+  
+   
+    figure = plt.figure(figsize=(15,10))
+    ax = plt.subplot(1,1,1)
+    ax.plot( total_generaciones,total_promedio, label='Promedio',marker='.')  # Plot some data on the (implicit) axes.
+    ax.plot( total_generaciones,total_peor, label='Peor',marker='.')  # etc.
+    ax.plot( total_generaciones,total_mejor,label='Mejor',marker='.')
+
+    # blue_line = mlines.Line2D([], [], color='blue', 
+    #                       markersize=15, label='Promedio')
+    # red = mlines.Line2D([], [], color='orange', 
+    #                       markersize=15, label='Peor')
+    # yel = mlines.Line2D([], [], color='green', 
+    #                       markersize=15, label='Mejor')
+    # ax.legend(handles=[blue_line,red,yel])
+
+    
  
-    resuldos_finales.append([aptitudes_sort[0][1],aptitudes_sort[len(aptitudes_sort)-1][1],media])
-    print('a')
-    print(resuldos_finales)
-    contador_generaciones = 1
 
 
-    #SE TERMINA MAÑANA XD
-    A = 1
-
-
-
-crear_poblacion(bits_X=bitsX,bits_Y=bitsY,posicionX=x[0],posicionY=y[0],deltaX=resolucion_deltaX,deltaY=resolucion_deltaY)
-
-
+crear_poblacion(bits_X=bitsX,bits_Y=bitsY,posicionX=x[0],posicionY=y[0],deltaX=resolucion_deltaX,deltaY=resolucion_deltaY,contador_gen=contador_generaciones)
+grafica()
+plt.show()
 
 
  

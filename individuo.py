@@ -38,7 +38,8 @@ class Individuo():
     
     def formula(self):
         self.aptitud = self.fenotipo_X**2 * math.sin(self.fenotipo_Y) - 2 * self.fenotipo_Y**2 * math.cos(self.fenotipo_X)
-       
+    #     self.aptitud =  -self.fenotipo_X * 3 + 4 * self.fenotipo_X * self.fenotipo_Y *
+    #    fx,y=-x3+4xy-2y2+1
     def binario_to_Decimal(binario):
         decimal = 0
         i = 0
