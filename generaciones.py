@@ -1,12 +1,19 @@
 from traceback import print_tb
 from individuo import *
+from formulario import *
 import random
 import operator
 import statistics
 import matplotlib.pyplot as plt
-resolucion = 0.001
-x = [2,7]
-y = [6,8]
+import matplotlib.lines as mlines
+
+vista_entrada = Formulario()
+vista_entrada.vista()
+print('soy el X1: ',vista_entrada.posicionX_1)
+
+resolucion = float(vista_entrada.resolucion)
+x = [int(vista_entrada.posicionX_1),int(vista_entrada.posicionX_2)]
+y = [int(vista_entrada.posicionY_1),int(vista_entrada.posicionY_2)]
 
 RX = x[0] - x[1]
 RXnew = abs(RX)
@@ -14,11 +21,12 @@ RY = y[0] - y[1]
 RYnew = abs(RY)
 valoresX = round(RXnew / resolucion + 1)
 valoresY = round(RYnew / resolucion + 1)
-tam_pob_incial = 6
-prob_muta_individuo = 0.1
-prob_mut_gen = 0.05
-tam_pob_max = 20
-num_generaciones = 50
+
+tam_pob_incial = int(vista_entrada.tamaño_poblacion_inicial)
+prob_muta_individuo = float(vista_entrada.probabilidad_mutacion_individual)
+prob_mut_gen = float(vista_entrada.probabilidad_mutacion_genetica)
+tam_pob_max = int(vista_entrada.tamaño_poblacion_maxima)
+num_generaciones = int(vista_entrada.generaciones)
 
 
 id = ["A","B","C","D","E","F","G","H","I","J","K","L","M","O","P","Q","R","S","T","V","X","Y","Z"]
@@ -48,8 +56,8 @@ def num_Bits(valor):
     return bits
 
 
-print('valores X: ',valoresX)
-print('valores Y: ',valoresY)
+# print('valores X: ',valoresX)
+# print('valores Y: ',valoresY)
 
 # print('bits valores x: ',2**num_Bits(valoresX))
 # print('bits valores y: ',2**num_Bits(valoresY))
@@ -270,7 +278,7 @@ def mutacion(listaCruzados_aux,listaNombresAux,contador_gen):
         poda(contador_gen)
 
 def poda(contador_gen):
-    print('entre a podar')
+   
       
 
     aptitudes_generacion = {}
@@ -331,10 +339,10 @@ def generaciones(aptitudes_sort,contador_gen):
     if contador_gen == num_generaciones:
         
         for resul in resuldos_finales:
-            print(resul)
+            
             total_mejor.append(resul[0])
             total_promedio.append(resul[1])
-        
+         
         
 
 def completarGeneraciones(lista_new_plobation,lista_new_Nombres,contador_gen):
@@ -357,21 +365,21 @@ def grafica():
     ax.plot( total_generaciones,total_peor, label='Peor',marker='.')  # etc.
     ax.plot( total_generaciones,total_mejor,label='Mejor',marker='.')
 
-    # blue_line = mlines.Line2D([], [], color='blue', 
-    #                       markersize=15, label='Promedio')
-    # red = mlines.Line2D([], [], color='orange', 
-    #                       markersize=15, label='Peor')
-    # yel = mlines.Line2D([], [], color='green', 
-    #                       markersize=15, label='Mejor')
-    # ax.legend(handles=[blue_line,red,yel])
+    blue_line = mlines.Line2D([], [], color='blue', 
+                          markersize=15, label='Promedio')
+    red = mlines.Line2D([], [], color='orange', 
+                          markersize=15, label='Peor')
+    yel = mlines.Line2D([], [], color='green', 
+                          markersize=15, label='Mejor')
+    ax.legend(handles=[yel,blue_line,red])
 
     
  
-
-
 crear_poblacion(bits_X=bitsX,bits_Y=bitsY,posicionX=x[0],posicionY=y[0],deltaX=resolucion_deltaX,deltaY=resolucion_deltaY,contador_gen=contador_generaciones)
 grafica()
 plt.show()
+
+
 
 
  

@@ -38,8 +38,8 @@ class Individuo():
     
     def formula(self):
         self.aptitud = self.fenotipo_X**2 * math.sin(self.fenotipo_Y) - 2 * self.fenotipo_Y**2 * math.cos(self.fenotipo_X)
-    #     self.aptitud =  -self.fenotipo_X * 3 + 4 * self.fenotipo_X * self.fenotipo_Y *
-    #    fx,y=-x3+4xy-2y2+1
+   
+        #cos(x) * cos(y) * (e ** ( ((x*-1)**2) * ((y*-1)**2) ))
     def binario_to_Decimal(binario):
         decimal = 0
         i = 0
@@ -75,7 +75,6 @@ class Individuo():
         self.fenotipo_X = posicion_X + self.i_X * delta_X
         self.fenotipo_Y = posicion_Y + self.i_Y * delta_Y
         self.aptitud = self.fenotipo_X**2 * math.sin(self.fenotipo_Y) - 2 * self.fenotipo_Y**2 * math.cos(self.fenotipo_X)
-        
 
     def toString(self):
         return f'id: {self.id}\n' + f'Genotipo X: {self.genotipo_X}\n' + f'Genotipo Y: {self.genotipo_Y}\n' + f'i_X: {self.i_X}\n'+ f'i_Y: {self.i_Y}\n'+f'Fenotipo_X: {self.fenotipo_X}\n'+ f'Fenotipo_Y: {self.fenotipo_Y}\n' +f'aptiud: {self.aptitud}'
