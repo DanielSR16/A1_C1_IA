@@ -1,7 +1,7 @@
 import random
 from unicodedata import name
 import math
-from main import binario_to_Decimal
+
 
 class Individuo():
     def __init__(self,id):
@@ -39,18 +39,7 @@ class Individuo():
     def formula(self):
         self.aptitud = self.fenotipo_X**2 * math.sin(self.fenotipo_Y) - 2 * self.fenotipo_Y**2 * math.cos(self.fenotipo_X)
    
-        #cos(x) * cos(y) * (e ** ( ((x*-1)**2) * ((y*-1)**2) ))
-    def binario_to_Decimal(binario):
-        decimal = 0
-        i = 0
-        while (binario>0):
-            digito  = binario%10
-            binario = int(binario//10)
-            decimal = decimal+digito*(2**i)
-            i = i+1
-        # SALIDA
-        return decimal
-
+        
     def crearIndividuo(self,bits_X,bits_Y,posicionX,deltaX,posicionY,deltaY):
         self.genotipoX(bits_X)
         self.genotipoY(bits_Y)
@@ -77,9 +66,18 @@ class Individuo():
         self.aptitud = self.fenotipo_X**2 * math.sin(self.fenotipo_Y) - 2 * self.fenotipo_Y**2 * math.cos(self.fenotipo_X)
 
     def toString(self):
-        return f'id: {self.id}\n' + f'Genotipo X: {self.genotipo_X}\n' + f'Genotipo Y: {self.genotipo_Y}\n' + f'i_X: {self.i_X}\n'+ f'i_Y: {self.i_Y}\n'+f'Fenotipo_X: {self.fenotipo_X}\n'+ f'Fenotipo_Y: {self.fenotipo_Y}\n' +f'aptiud: {self.aptitud}'
+        return  f'Genotipo X: {self.genotipo_X}\n' + f'Genotipo Y: {self.genotipo_Y}\n' + f'i_X: {self.i_X}\n'+ f'i_Y: {self.i_Y}\n'+f'Fenotipo_X: {self.fenotipo_X}\n'+ f'Fenotipo_Y: {self.fenotipo_Y}\n' +f'aptiud: {self.aptitud}'
   
-
+def binario_to_Decimal(binario):
+        decimal = 0
+        i = 0
+        while (binario>0):
+            digito  = binario%10
+            binario = int(binario//10)
+            decimal = decimal+digito*(2**i)
+            i = i+1
+        # SALIDA
+        return decimal
 
 
 

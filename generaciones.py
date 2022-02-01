@@ -12,8 +12,8 @@ vista_entrada.vista()
 print('soy el X1: ',vista_entrada.posicionX_1)
 
 resolucion = float(vista_entrada.resolucion)
-x = [int(vista_entrada.posicionX_1),int(vista_entrada.posicionX_2)]
-y = [int(vista_entrada.posicionY_1),int(vista_entrada.posicionY_2)]
+x = [float(vista_entrada.posicionX_1),float(vista_entrada.posicionX_2)]
+y = [float(vista_entrada.posicionY_1),float(vista_entrada.posicionY_2)]
 
 RX = x[0] - x[1]
 RXnew = abs(RX)
@@ -278,7 +278,9 @@ def mutacion(listaCruzados_aux,listaNombresAux,contador_gen):
         poda(contador_gen)
 
 def poda(contador_gen):
-   
+    # for todos in listaPoblacion.values():
+    #     print(todos.toString())
+    #     print('______________________________________')
       
 
     aptitudes_generacion = {}
@@ -313,7 +315,7 @@ def poda(contador_gen):
 
 
 def generaciones(aptitudes_sort,contador_gen):
-  
+
     contador_gen = contador_gen + 1
     print(contador_gen)
     new_poblacion = {}
@@ -330,9 +332,20 @@ def generaciones(aptitudes_sort,contador_gen):
         new_poblacion[datos_new[0]] = listaPoblacion[datos_new[0]]
     
     listaPoblacion.clear()
+    
+
     for datos_new2 in aptitudes_sort:
         listaPoblacion[datos_new2[0]] = new_poblacion[datos_new2[0]]
         new_nombres_poblacion.append(datos_new2[0])
+    #editar
+    # x=[1,2,3,4,5,6]
+    # y=[2,1,5,6,3,9]
+
+    # plt.scatter(x, y)
+    # plt.xlabel("X")
+    # plt.ylabel("Y")
+    # plt.title("Scatter Plot")
+    # plt.show()
 
     if contador_gen < num_generaciones:
         completarGeneraciones(listaPoblacion,new_nombres_poblacion,contador_gen)
@@ -356,6 +369,7 @@ def completarGeneraciones(lista_new_plobation,lista_new_Nombres,contador_gen):
     
 def grafica():
    
+
      #Primera Tabla
   
    
@@ -364,6 +378,8 @@ def grafica():
     ax.plot( total_generaciones,total_promedio, label='Promedio',marker='.')  # Plot some data on the (implicit) axes.
     ax.plot( total_generaciones,total_peor, label='Peor',marker='.')  # etc.
     ax.plot( total_generaciones,total_mejor,label='Mejor',marker='.')
+    ax.set_ylabel('Aptitud')
+    ax.set_xlabel('Generaciones')
 
     blue_line = mlines.Line2D([], [], color='blue', 
                           markersize=15, label='Promedio')
@@ -373,10 +389,40 @@ def grafica():
                           markersize=15, label='Mejor')
     ax.legend(handles=[yel,blue_line,red])
 
-    
+def tabla():
+        # for todos in listaPoblacion.values():
+        #     print(todos.toString())
+        #     print('______________________________________')
+
+        figure2 = plt.figure(figsize=(15,10))
+        ax2 = plt.subplot(1,1,1)
+        data = []
+        auxList = []
+        resta = tam_pob_max - 4 
+        contador_impresion = 0 
+        for individuo in listaPoblacion.values():
+            contador_impresion = contador_impresion + 1
+            if contador_impresion >=resta:
+                auxList.append(individuo.genotipo_X)
+                auxList.append(individuo.genotipo_Y)
+                auxList.append(individuo.i_X)
+                auxList.append(individuo.i_Y)
+                auxList.append(individuo.fenotipo_X)
+                auxList.append(individuo.fenotipo_Y)
+                auxList.append(individuo.aptitud)
+                data.append(auxList)
+                auxList = []
+
+        print(data)
+        colum_labeles = ['Genotipo X','Genotipo Y','iX','iY','Fenotipo X','Fenotipo Y','Aptitud']
+        ax2.axis('tight')
+        ax2.axis('off')
+        tabla = ax2.table(cellText=data,colLabels=colum_labeles,loc="center")
+        tabla.set_fontsize(30)      
  
 crear_poblacion(bits_X=bitsX,bits_Y=bitsY,posicionX=x[0],posicionY=y[0],deltaX=resolucion_deltaX,deltaY=resolucion_deltaY,contador_gen=contador_generaciones)
 grafica()
+tabla()
 plt.show()
 
 
