@@ -6,7 +6,7 @@ import operator
 import statistics
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
-
+import numpy as np
 vista_entrada = Formulario()
 vista_entrada.vista()
 print('soy el X1: ',vista_entrada.posicionX_1)
@@ -71,6 +71,7 @@ resolucion_deltaY = round(RYnew / 2**num_Bits(valoresY),5)
 # print(resolucion_deltaX)
 # print(resolucion_deltaY)
 
+contador_fotos = 0
 def crear_poblacion(bits_X,bits_Y,posicionX,posicionY,deltaX,deltaY,contador_gen):
     contador = 0
     print('soy delta Y : ',deltaY)
@@ -290,6 +291,15 @@ def poda(contador_gen):
 
     aptitudes_sort = sorted(aptitudes_generacion.items(),key=operator.itemgetter(1),reverse=True)
     total_peor.append(aptitudes_sort[len(aptitudes_sort)-1][1])
+    fenotipoX_grafica = []
+    fenotipoY_grafica = []
+
+    for individuo_grafica in listaPoblacion.values():
+   
+        fenotipoX_grafica.append(individuo_grafica.fenotipo_X)
+        fenotipoY_grafica.append(individuo_grafica.fenotipo_Y)
+        
+    graficaPuntos(fenotipoX_grafica,fenotipoY_grafica,contador_gen)
 
     # for name in enumerate(aptitudes_sort):
     #     print(name[1])
@@ -420,9 +430,22 @@ def tabla():
         tabla = ax2.table(cellText=data,colLabels=colum_labeles,loc="center")
         tabla.set_fontsize(30)      
  
+def graficaPuntos(fenotipo_X,fenotipo_Y,contador_fotos):
+
+    figure3 = plt.figure(figsize=(10,10))
+    ax3 = plt.subplot(1,1,1)
+    ax3 = plt.plot(fenotipo_X,fenotipo_Y,"o",color="red",)
+    ax3 = plt.xlabel("Fenotipo X")
+    ax3 = plt.ylabel("Fenotipo Y")
+    ax3 = plt.title("Scatter Plot")
+    ax3 = plt.savefig('imagen'+str(contador_fotos)+'.png', dpi=300, bbox_inches='tight')
+    contador_fotos = contador_fotos + 1
+  
+
 crear_poblacion(bits_X=bitsX,bits_Y=bitsY,posicionX=x[0],posicionY=y[0],deltaX=resolucion_deltaX,deltaY=resolucion_deltaY,contador_gen=contador_generaciones)
 grafica()
 tabla()
+
 plt.show()
 
 
